@@ -12,8 +12,9 @@ import lombok.*;
 @NoArgsConstructor
 @Table(name = "tags")
 public class Tags {
-
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(nullable = false)
     private Long tagId;
     private String tagName;
     private  String colors;
