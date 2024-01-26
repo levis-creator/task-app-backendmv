@@ -15,7 +15,6 @@ public class NotFoundHandler {
         HttpStatus status = HttpStatus.BAD_REQUEST;
         ApiException apiException = new ApiException(
                 exception.getMessage(),
-                exception,
                 status,
                 ZonedDateTime.now(ZoneId.of("Z"))
 

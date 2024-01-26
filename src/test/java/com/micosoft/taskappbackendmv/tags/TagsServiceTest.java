@@ -24,6 +24,7 @@ class TagsServiceTest {
     Tags tag;
 
     String tagName = "React";
+   Long tagId=1L;
     Tags updateTag = Tags.builder().tagId(1L).tagName("Something else").colors("#ff8").build();
 
     @BeforeEach
@@ -39,14 +40,14 @@ class TagsServiceTest {
 
     @Test
     void gettingTagWhenExist() {
-        when(tagsRepository.findByTagNameIgnoreCase(tagName)).thenReturn(Optional.of(tag));
-        assertThat(tagsService.getTag(tagName)).isNotNull();
+        when(tagsRepository.findById(tagId)).thenReturn(Optional.of(tag));
+        assertThat(tagsService.getTag(tagId)).isNotNull();
     }
 
     @Test
     void gettingTagWhenDoesNotExist() {
-        when(tagsRepository.findByTagNameIgnoreCase(tag.getTagName())).thenReturn(Optional.empty());
-        assertThrows(NotFoundException.class, () -> tagsService.getTag(tagName));
+        when(tagsRepository.findById(tagId)).thenReturn(Optional.empty());
+        assertThrows(NotFoundException.class, () -> tagsService.getTag(tagId));
     }
 
     @Test
@@ -65,36 +66,37 @@ class TagsServiceTest {
 
     @Test
     void deletingTagWhenTagDoesNotExist() {
-        when(tagsRepository.findByTagNameIgnoreCase(tagName)).thenReturn(Optional.empty());
-        assertThrows(NotFoundException.class, () -> tagsService.deleteTag(tagName));
-        verify(tagsRepository, never()).deleteById(tagName);
+        when(tagsRepository.findById(tagId)).thenReturn(Optional.empty());
+        assertThrows(NotFoundException.class, () -> tagsService.deleteTag(tagId));
+        verify(tagsRepository, never()).deleteById(tagId);
     }
 
     @Test
     void deletingTagWhenTagExists() {
-        when(tagsRepository.findByTagNameIgnoreCase(tagName)).thenReturn(Optional.of(tag));
-        assertThat(tagsService.deleteTag(tagName)).isNotNull();
-        verify(tagsRepository).deleteById(tagName);
+        when(tagsRepository.findById(tagId)).thenReturn(Optional.of(tag));
+        assertThat(tagsService.deleteTag(tagId)).isNotNull();
+        verify(tagsRepository).deleteById(tagId);
     }
 
     @Test
     void updatingTagWhenTagDoeNotExist() {
         when(tagsRepository.findByTagNameIgnoreCase(tagName)).thenReturn(Optional.empty());
-        assertThrows(NotFoundException.class, () -> tagsService.updateTag(tagName, tag));
+        assertThrows(NotFoundException.class, () -> tagsService.updateTag(tagId, tag));
         verify(tagsRepository, never()).save(any());
     }
 
     @Test
     void updatingTagWhenTagExists() {
-        when(tagsRepository.findByTagNameIgnoreCase(tagName)).thenReturn(Optional.of(tag));
+        when(tagsRepository.findById(tagId)).thenReturn(Optional.of(tag));when(tagsRepository.findByTagNameIgnoreCase(updateTag.getTagName())).thenReturn(Optional.empty());
         when(tagsRepository.save(tag)).thenReturn(tag);
-        Tags result = tagsService.updateTag(tagName, updateTag);
+        Tags result = tagsService.updateTag(tagId, updateTag);
         assertAll(
                 () -> assertEquals(updateTag.getTagName(), result.getTagName()),
                 () -> assertEquals(updateTag.getColors(), result.getColors())
         );
 
     }
+
 
 
 }

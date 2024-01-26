@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface TagsRepository extends JpaRepository<Tags, String> {
+public interface TagsRepository extends JpaRepository<Tags, Long> {
     Optional<Tags> findByTagNameIgnoreCase(String tagName);
 }

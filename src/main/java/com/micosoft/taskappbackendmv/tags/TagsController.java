@@ -18,19 +18,19 @@ public class TagsController {
         return tagsService.getTags();
     }
     @GetMapping("{id}")
-    public Tags getTag(@PathVariable String id){
+    public Tags getTag(@PathVariable Long id){
         return tagsService.getTag(id);
     }
     @PostMapping
     public Tags createTag(@RequestBody Tags tags){
         return tagsService.createTag(tags);
     }
-    @DeleteMapping
-    public String deleteTag(@PathVariable String id){
+    @DeleteMapping("{id}")
+    public String deleteTag(@PathVariable Long id){
         return tagsService.deleteTag(id);
     }
     @PutMapping("{id}")
-    public  Tags updateTag(@PathVariable String id, @RequestBody Tags tags){
+    public  Tags updateTag(@PathVariable Long id, @RequestBody Tags tags){
         return tagsService.updateTag(id, tags);
     }
 }
