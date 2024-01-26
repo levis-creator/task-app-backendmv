@@ -1,5 +1,6 @@
 package com.micosoft.taskappbackendmv.tags;
 
+import com.micosoft.taskappbackendmv.errors.NotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -45,13 +46,13 @@ class TagsServiceTest {
     @Test
     void gettingTagWhenDoesNotExist() {
         when(tagsRepository.findByTagNameIgnoreCase(tag.getTagName())).thenReturn(Optional.empty());
-        assertThrows(IllegalStateException.class, () -> tagsService.getTag(tagName));
+        assertThrows(NotFoundException.class, () -> tagsService.getTag(tagName));
     }
 
     @Test
     void creatingTagWhenExists() {
         when(tagsRepository.findByTagNameIgnoreCase(tag.getTagName())).thenReturn(Optional.of(tag));
-        assertThrows(IllegalStateException.class, () -> tagsService.createTag(tag));
+        assertThrows(NotFoundException.class, () -> tagsService.createTag(tag));
         verify(tagsRepository, never()).save(any());
     }
 
@@ -65,7 +66,7 @@ class TagsServiceTest {
     @Test
     void deletingTagWhenTagDoesNotExist() {
         when(tagsRepository.findByTagNameIgnoreCase(tagName)).thenReturn(Optional.empty());
-        assertThrows(IllegalStateException.class, () -> tagsService.deleteTag(tagName));
+        assertThrows(NotFoundException.class, () -> tagsService.deleteTag(tagName));
         verify(tagsRepository, never()).deleteById(tagName);
     }
 
@@ -79,7 +80,7 @@ class TagsServiceTest {
     @Test
     void updatingTagWhenTagDoeNotExist() {
         when(tagsRepository.findByTagNameIgnoreCase(tagName)).thenReturn(Optional.empty());
-        assertThrows(IllegalStateException.class, () -> tagsService.updateTag(tagName, tag));
+        assertThrows(NotFoundException.class, () -> tagsService.updateTag(tagName, tag));
         verify(tagsRepository, never()).save(any());
     }
 

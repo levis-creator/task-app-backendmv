@@ -1,5 +1,6 @@
 package com.micosoft.taskappbackendmv.subtasks;
 
+import com.micosoft.taskappbackendmv.errors.NotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -46,7 +47,7 @@ class SubTaskServiceTest {
     @Test
     void gettingSingleSubTaskIsNotFound() {
         when(subTaskRepository.findById(subTaskId)).thenReturn(Optional.empty());
-        assertThrows(IllegalStateException.class, () -> subTaskService.getSubtask(subTaskId));
+        assertThrows(NotFoundException.class, () -> subTaskService.getSubtask(subTaskId));
     }
     @Test
     void creatingSubTaskWhenDoesNotExist(){
@@ -57,13 +58,13 @@ class SubTaskServiceTest {
     @Test
     void creatingSubTaskWhenExist(){
         when(subTaskRepository.findById(subTaskId)).thenReturn(Optional.of(subTask));
-        assertThrows(IllegalStateException.class,()->subTaskService.creatingSubTask(subTask));
+        assertThrows(NotFoundException.class,()->subTaskService.creatingSubTask(subTask));
         verify(subTaskRepository, never()).save(any());
     }
     @Test
     void deletingSubTaskWhenDoesNotExist(){
         when(subTaskRepository.findById(subTaskId)).thenReturn(Optional.empty());
-        assertThrows(IllegalStateException.class, ()->subTaskService.deleteTask(subTaskId));
+        assertThrows(NotFoundException.class, ()->subTaskService.deleteTask(subTaskId));
         verify(subTaskRepository, never()).deleteById(subTaskId);
     }
     @Test
@@ -75,7 +76,7 @@ class SubTaskServiceTest {
     @Test
     void updatingSubTaskThatDoesNotExist(){
         when(subTaskRepository.findById(subTaskId)).thenReturn(Optional.empty());
-        assertThrows(IllegalStateException.class, ()->subTaskService.updateSubTask(subTaskId, updateSubTask));
+        assertThrows(NotFoundException.class, ()->subTaskService.updateSubTask(subTaskId, updateSubTask));
         verify(subTaskRepository, never()).save(updateSubTask);
     }
     @Test

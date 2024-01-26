@@ -1,5 +1,6 @@
 package com.micosoft.taskappbackendmv.tasks;
 
+import com.micosoft.taskappbackendmv.errors.NotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,14 +24,14 @@ public class TaskService {
         if (taskExist) {
             return taskRepository.findById(id).get();
         } else {
-            throw new IllegalStateException("task does not exist");
+            throw new NotFoundException("task does not exist");
         }
     }
 
     public Task createTask(Task task) {
         boolean taskExist = taskRepository.existsById(task.getTaskId());
         if (taskExist) {
-            throw new IllegalStateException("task already exist");
+            throw new NotFoundException("task already exist");
         } else {
             return taskRepository.save(task);
         }
@@ -42,7 +43,7 @@ public class TaskService {
             taskRepository.deleteById(id);
             return "Deleted successfully";
         }else {
-            throw new IllegalStateException("task does not exists");
+            throw new NotFoundException("task does not exists");
         }
     }
 
@@ -51,7 +52,7 @@ public class TaskService {
         Optional<Task> taskDb= taskRepository.findById(id);
 
         if (taskDb.isEmpty()){
-            throw new IllegalStateException("task does not exists");
+            throw new NotFoundException("task does not exists");
         }else if (!task.getTaskTitle().isEmpty()
                 &&!task.getTaskTitle().equals(taskDb.get().getTaskTitle())){
             taskDb.get().setTaskTitle(task.getTaskTitle());

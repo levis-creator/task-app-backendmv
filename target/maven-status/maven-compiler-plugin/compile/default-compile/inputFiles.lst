@@ -2,6 +2,7 @@
 /home/black/Documents/projects/web/Backend/task-app-backendmv/src/main/java/com/micosoft/taskappbackendmv/subtasks/SubTask.java
 /home/black/Documents/projects/web/Backend/task-app-backendmv/src/main/java/com/micosoft/taskappbackendmv/categories/CategoryService.java
 /home/black/Documents/projects/web/Backend/task-app-backendmv/src/main/java/com/micosoft/taskappbackendmv/tags/Tags.java
+/home/black/Documents/projects/web/Backend/task-app-backendmv/src/main/java/com/micosoft/taskappbackendmv/errors/NotFoundHandler.java
 /home/black/Documents/projects/web/Backend/task-app-backendmv/src/main/java/com/micosoft/taskappbackendmv/users/UserController.java
 /home/black/Documents/projects/web/Backend/task-app-backendmv/src/main/java/com/micosoft/taskappbackendmv/tasks/Task.java
 /home/black/Documents/projects/web/Backend/task-app-backendmv/src/main/java/com/micosoft/taskappbackendmv/categories/Category.java
@@ -9,7 +10,9 @@
 /home/black/Documents/projects/web/Backend/task-app-backendmv/src/main/java/com/micosoft/taskappbackendmv/tasks/TaskRepository.java
 /home/black/Documents/projects/web/Backend/task-app-backendmv/src/main/java/com/micosoft/taskappbackendmv/users/UserService.java
 /home/black/Documents/projects/web/Backend/task-app-backendmv/src/main/java/com/micosoft/taskappbackendmv/categories/CategoryController.java
+/home/black/Documents/projects/web/Backend/task-app-backendmv/src/main/java/com/micosoft/taskappbackendmv/errors/NotFoundException.java
 /home/black/Documents/projects/web/Backend/task-app-backendmv/src/main/java/com/micosoft/taskappbackendmv/tasks/TaskService.java
+/home/black/Documents/projects/web/Backend/task-app-backendmv/src/main/java/com/micosoft/taskappbackendmv/errors/ApiException.java
 /home/black/Documents/projects/web/Backend/task-app-backendmv/src/main/java/com/micosoft/taskappbackendmv/TaskAppBackendmvApplication.java
 /home/black/Documents/projects/web/Backend/task-app-backendmv/src/main/java/com/micosoft/taskappbackendmv/tasks/TaskController.java
 /home/black/Documents/projects/web/Backend/task-app-backendmv/src/main/java/com/micosoft/taskappbackendmv/subtasks/SubTaskRepository.java

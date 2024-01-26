@@ -1,5 +1,6 @@
 package com.micosoft.taskappbackendmv.tags;
 
+import com.micosoft.taskappbackendmv.errors.NotFoundException;
 import com.micosoft.taskappbackendmv.users.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class TagsService {
         if (tagDb.isPresent()){
             return tagDb.get();
         }else {
-            throw new IllegalStateException("tag does not exist");
+            throw new NotFoundException("tag does not exist");
         }
         
     }
@@ -34,7 +35,7 @@ public class TagsService {
         if (tagsDb.isEmpty()){
             return tagsRepository.save(tags);
         }else {
-            throw new IllegalStateException("Tag Does Not exists");
+            throw new NotFoundException("Tag Does Not exists");
         }
     }
 
@@ -44,14 +45,14 @@ public class TagsService {
             tagsRepository.deleteById(id);
             return "Deleted Successfully";
         }else {
-            throw new IllegalStateException("Tag does not exists");
+            throw new NotFoundException("Tag does not exists");
         }
     }
 
     public Tags updateTag(String id, Tags tags) {
         Optional<Tags> tagsDb=tagsRepository.findByTagNameIgnoreCase(id);
         if (tagsDb.isEmpty()){
-            throw new IllegalStateException("Tag does not exist");
+            throw new NotFoundException("Tag does not exist");
 
         }else if (!tags.getTagName().isEmpty()&&!tags.getTagName().equals(tagsDb.get().getTagName())){
             tagsDb.get().setTagName(tags.getTagName());

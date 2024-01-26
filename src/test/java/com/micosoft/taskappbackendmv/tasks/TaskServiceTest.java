@@ -1,5 +1,6 @@
 package com.micosoft.taskappbackendmv.tasks;
 
+import com.micosoft.taskappbackendmv.errors.NotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -57,12 +58,12 @@ class TaskServiceTest {
     @Test
     void gettingTaskWhenTasKDoesNotExist(){
         when(taskRepository.existsById(taskId)).thenReturn(false);
-        assertThrows(IllegalStateException.class,()->taskService.getTask(taskId));
+        assertThrows(NotFoundException.class,()->taskService.getTask(taskId));
     }
     @Test
     void creatingTaskWhenTaskExists(){
         when(taskRepository.existsById(taskId)).thenReturn(true);
-        assertThrows(IllegalStateException.class,()->taskService.createTask(task));
+        assertThrows(NotFoundException.class,()->taskService.createTask(task));
         verify(taskRepository, never()).save(any());
     }
     @Test
@@ -79,13 +80,13 @@ class TaskServiceTest {
     @Test
     void  deletingTaskThatDoesNotExist(){
         when(taskRepository.existsById(taskId)).thenReturn(false);
-        assertThrows(IllegalStateException.class, ()->taskService.deleteTask(taskId));
+        assertThrows(NotFoundException.class, ()->taskService.deleteTask(taskId));
     }
     @Test
     void updateTaskThatDoesNotExist(){
 
         when(taskRepository.findById(taskId)).thenReturn(Optional.empty());
-        assertThrows(IllegalStateException.class,()->taskService.updateTask(taskId, updateTask));
+        assertThrows(NotFoundException.class,()->taskService.updateTask(taskId, updateTask));
 
     }
     @Test

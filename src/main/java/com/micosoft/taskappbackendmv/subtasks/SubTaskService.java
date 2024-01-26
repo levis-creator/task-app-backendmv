@@ -1,5 +1,6 @@
 package com.micosoft.taskappbackendmv.subtasks;
 
+import com.micosoft.taskappbackendmv.errors.NotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,7 @@ public class SubTaskService {
         if (subTaskDb.isPresent()) {
             return subTaskDb.get();
         } else {
-            throw new IllegalStateException("Subtask does not exist");
+            throw new NotFoundException("Subtask does not exist");
         }
     }
 
@@ -31,7 +32,7 @@ public class SubTaskService {
         if (subTaskDb.isEmpty()) {
             return subTaskRepository.save(subTask);
         } else {
-            throw new IllegalStateException("Subtask already exist");
+            throw new NotFoundException("Subtask already exist");
         }
     }
 
@@ -41,14 +42,14 @@ public class SubTaskService {
             subTaskRepository.deleteById(id);
             return "Delete subtask";
         } else {
-            throw new IllegalStateException("Task not found");
+            throw new NotFoundException("Task not found");
         }
     }
 
     public SubTask updateSubTask(Long id, SubTask subTask) {
         Optional<SubTask> subTaskDb = subTaskRepository.findById(id);
         if (subTaskDb.isEmpty()) {
-            throw new IllegalStateException("Task not found");
+            throw new NotFoundException("Task not found");
         } else if (!subTask.getSubTaskName().isEmpty() && !subTask.getSubTaskName().equals(subTaskDb.get().getSubTaskName())) {
             subTaskDb.get().setSubTaskName(subTask.getSubTaskName());
         }

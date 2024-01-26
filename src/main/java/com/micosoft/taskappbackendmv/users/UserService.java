@@ -1,5 +1,6 @@
 package com.micosoft.taskappbackendmv.users;
 
+import com.micosoft.taskappbackendmv.errors.NotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,11 +24,11 @@ public class UserService {
         boolean usernameExists=userRepository.findByUsernameIgnoreCase(user.getUsername()).isPresent();
         boolean emailExists=userRepository.findByEmailIgnoreCase(user.getEmail()).isPresent();
         if (userExists){
-            throw new IllegalStateException("user already exists");
+            throw new NotFoundException("user already exists");
         } else if (usernameExists) {
-            throw new IllegalStateException("username already exist");
+            throw new NotFoundException("username already exist");
         } else if (emailExists) {
-            throw new IllegalStateException("email already exists");
+            throw new NotFoundException("email already exists");
         }else {
             return userRepository.save(user);
         }
@@ -37,7 +38,7 @@ public class UserService {
     public Optional<User> getSingleUser(String id) {
         boolean userExists=userRepository.existsById(id);
         if (!userExists){
-            throw new IllegalStateException("User does not exist");
+            throw new NotFoundException("User does not exist");
         }else {
             return userRepository.findById(id);
         }
@@ -46,7 +47,7 @@ public class UserService {
     public String deleteUser(String id) {
         boolean userExists=userRepository.existsById(id);
         if (!userExists){
-            throw new IllegalStateException("User does not exist");
+            throw new NotFoundException("User does not exist");
         }else {
             userRepository.deleteById(id);
             return "User successfully deleted";

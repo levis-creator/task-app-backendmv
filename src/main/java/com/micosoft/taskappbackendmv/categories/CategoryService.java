@@ -1,5 +1,6 @@
 package com.micosoft.taskappbackendmv.categories;
 
+import com.micosoft.taskappbackendmv.errors.NotFoundException;
 import lombok.AllArgsConstructor;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public class CategoryService {
         if (categoryDb.isPresent()){
             return categoryDb.get();
         }else {
-            throw new IllegalStateException("Category doe not exist");
+            throw new NotFoundException("Category doe not exist");
         }
     }
 
@@ -26,7 +27,7 @@ public class CategoryService {
         if (categoryDb.isEmpty()){
             return categoryRepository.save(category);
         }else {
-            throw new IllegalStateException("Category already exists");
+            throw new NotFoundException("Category already exists");
         }
 
     }
@@ -37,14 +38,14 @@ public class CategoryService {
             categoryRepository.deleteById(id);
             return "Deleted successfully";
         }else {
-            throw new IllegalStateException("Category does not exist");
+            throw new NotFoundException("Category does not exist");
         }
     }
 
     public Category updateCategory(Long id, Category category) {
         Optional<Category> categoryDb = categoryRepository.findById(id);
         if (categoryDb.isEmpty()){
-            throw new IllegalStateException("Category not found");
+            throw new NotFoundException("Category not found");
         }else if (!category.getCategoryName().isEmpty()&&!category.getCategoryName().equals(categoryDb.get().getCategoryName())){
             categoryDb.get().setCategoryName(category.getCategoryName());
         }

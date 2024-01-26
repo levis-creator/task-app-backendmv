@@ -1,5 +1,6 @@
 package com.micosoft.taskappbackendmv.categories;
 
+import com.micosoft.taskappbackendmv.errors.NotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -39,7 +40,7 @@ class CategoryServiceTest {
     @Test
     void gettingCategoryWhenDoesNotExist(){
         when(categoryRepository.findById(categoryId)).thenReturn(Optional.empty());
-        assertThrows(IllegalStateException.class, ()-> categoryService.getCategory(categoryId));
+        assertThrows(NotFoundException.class, ()-> categoryService.getCategory(categoryId));
     }
     @Test
     void  gettingCategoryWhenExists(){
@@ -49,7 +50,7 @@ class CategoryServiceTest {
     @Test
     void creatingCategoryWhenExist(){
         when(categoryRepository.findByCategoryNameIgnoreCase(category.getCategoryName())).thenReturn(Optional.of(category));
-        assertThrows(IllegalStateException.class, ()->categoryService.createCategory(category));
+        assertThrows(NotFoundException.class, ()->categoryService.createCategory(category));
         verify(categoryRepository,never()).save(any());
     }
     @Test
@@ -68,13 +69,13 @@ class CategoryServiceTest {
     @Test
     void  deletingWhenCategoryDoesNotExist(){
         when(categoryRepository.findById(categoryId)).thenReturn(Optional.empty());
-        assertThrows(IllegalStateException.class,()->categoryService.deleteCategory(categoryId));
+        assertThrows(NotFoundException.class,()->categoryService.deleteCategory(categoryId));
         verify(categoryRepository,never()).deleteById(any());
     }
     @Test
     void updatingWhenCategoryDoesNotExist(){
         when(categoryRepository.findById(categoryId)).thenReturn(Optional.empty());
-        assertThrows(IllegalStateException.class, ()->categoryService.updateCategory(categoryId, category));
+        assertThrows(NotFoundException.class, ()->categoryService.updateCategory(categoryId, category));
         verify(categoryRepository, never()).save(any());
     }
     @Test

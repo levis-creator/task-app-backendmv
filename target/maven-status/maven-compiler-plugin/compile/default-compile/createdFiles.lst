@@ -1,11 +1,14 @@
 com/micosoft/taskappbackendmv/TaskAppBackendmvApplication.class
 com/micosoft/taskappbackendmv/users/User$UserBuilder.class
 com/micosoft/taskappbackendmv/tasks/Task$TaskBuilder.class
+com/micosoft/taskappbackendmv/errors/NotFoundException.class
 com/micosoft/taskappbackendmv/tags/TagsService.class
 com/micosoft/taskappbackendmv/categories/Category.class
+com/micosoft/taskappbackendmv/errors/ApiException.class
 com/micosoft/taskappbackendmv/subtasks/SubTask$SubTaskBuilder.class
 com/micosoft/taskappbackendmv/tags/TagsController.class
 com/micosoft/taskappbackendmv/subtasks/SubTaskRepository.class
+com/micosoft/taskappbackendmv/errors/NotFoundHandler.class
 com/micosoft/taskappbackendmv/users/UserService.class
 com/micosoft/taskappbackendmv/subtasks/SubTaskController.class
 com/micosoft/taskappbackendmv/tasks/TaskController.class
