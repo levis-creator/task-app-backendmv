@@ -20,7 +20,7 @@ public class SubTask {
     private boolean completedSubTask;
 
     @ManyToOne
-    @JoinColumn(name = "task_task_id")
+    @JoinColumn(name = "task_id")
     private Task task;
 
 }
