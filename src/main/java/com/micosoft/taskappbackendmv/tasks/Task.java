@@ -37,7 +37,7 @@ public class Task {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "category_item_id")
+    @JoinColumn(name = "category_item")
     private Category categoryItem;
 
     @ManyToMany
