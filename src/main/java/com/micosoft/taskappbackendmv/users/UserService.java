@@ -2,6 +2,7 @@ package com.micosoft.taskappbackendmv.users;
 
 import com.micosoft.taskappbackendmv.errors.NotFoundException;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,11 +11,8 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 public class UserService {
-
+    @Autowired
     private final UserRepository userRepository;
-
-
-
     public List<User> getUsers() {
         return userRepository.findAll();
     }

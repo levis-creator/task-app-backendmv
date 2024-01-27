@@ -12,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 public class TagsController {
     @Autowired
-    TagsService tagsService;
+    private  final TagsService tagsService;
     @GetMapping
     public List <Tags> getTags(){
         return tagsService.getTags();

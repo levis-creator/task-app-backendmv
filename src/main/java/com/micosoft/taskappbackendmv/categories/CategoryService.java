@@ -2,12 +2,15 @@ package com.micosoft.taskappbackendmv.categories;
 
 import com.micosoft.taskappbackendmv.errors.NotFoundException;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
+@Service
 @AllArgsConstructor
 public class CategoryService {
+    @Autowired
     private final  CategoryRepository categoryRepository;
     public List<Category> getAllCategories() {
         return categoryRepository.findAll();
