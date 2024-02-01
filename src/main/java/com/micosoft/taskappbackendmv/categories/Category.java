@@ -18,8 +18,9 @@ public class Category {
     private Long categoryId;
     private String categoryName;
     private String categoryColor;
-    @ManyToOne
-    @JoinColumn(name = "user_user_id")
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
     private User user;
 
 }

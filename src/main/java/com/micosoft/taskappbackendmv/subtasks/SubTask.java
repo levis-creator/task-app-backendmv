@@ -19,8 +19,8 @@ public class SubTask {
     private String subTaskName;
     private boolean completedSubTask;
 
-    @ManyToOne
-    @JoinColumn(name = "task_id")
-    private Task task;
-
+    public SubTask(long l, String subTaskName, boolean completedSubTask, Task task) {
+        this.subTaskName = subTaskName;
+        this.completedSubTask = completedSubTask;
+    }
 }

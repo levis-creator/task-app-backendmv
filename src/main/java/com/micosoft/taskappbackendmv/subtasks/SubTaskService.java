@@ -58,4 +58,8 @@ public class SubTaskService {
         }
         return subTaskRepository.save(subTaskDb.get());
     }
+
+    public List<SubTask> addMultiple(List<SubTask> subtasks) {
+        return subTaskRepository.saveAll(subtasks);
+    }
 }

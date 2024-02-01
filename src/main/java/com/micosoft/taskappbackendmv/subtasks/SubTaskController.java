@@ -27,6 +27,10 @@ public class SubTaskController {
     public SubTask creatingSubTask(@RequestBody SubTask subTask) {
         return subTaskService.creatingSubTask(subTask);
     }
+    @PostMapping("/all")
+    public List<SubTask> addAllSubtask(@RequestBody List<SubTask> subtasks){
+        return subTaskService.addMultiple(subtasks);
+    }
 
     @DeleteMapping("{id}")
     public String deletingSubTask(@PathVariable Long id) {

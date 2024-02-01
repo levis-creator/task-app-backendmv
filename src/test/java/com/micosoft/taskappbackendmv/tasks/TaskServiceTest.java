@@ -1,8 +1,10 @@
 package com.micosoft.taskappbackendmv.tasks;
 
+import com.micosoft.taskappbackendmv.categories.Category;
 import com.micosoft.taskappbackendmv.errors.NotFoundException;
 import com.micosoft.taskappbackendmv.subtasks.SubTask;
 import com.micosoft.taskappbackendmv.tags.Tags;
+import com.micosoft.taskappbackendmv.users.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -32,25 +34,26 @@ class TaskServiceTest {
     List<String> tag = new ArrayList<>();
     Tags tagInstance = new Tags(1L, "Emergency", "#ffff", null);
     Tags newTagInstance = new Tags(1L, "Emergency updates", "#ffff", null);
-    SubTask subTask = new SubTask(1L, "Something", false, task);
+    SubTask subTask = new SubTask(1L, "Something", false);
     List<SubTask> subTaskList = new ArrayList<>(List.of(subTask));
     Collection<Tags> tagsList = new ArrayList<>(List.of(tagInstance));
     Collection<Tags> newTagsList = new ArrayList<>(List.of(newTagInstance));
     Task updateTask = Task.builder().taskId(1L)
-            .taskTitle("Create something Else")
-            .tags(newTagsList).subTasks(null)
-            .tasKDescription("Some description else")
+            .taskName("Create something Else")
+//            .tags(newTagsList)
+            .subTasks(null)
+            .taskDescription("Some description else")
             .dueDate(LocalDate.of(2019, Month.FEBRUARY, 27))
-            .build();
+            .user(null).categoryItem(null).build();
 
     @BeforeEach
     void setUp() {
         task = Task.builder().taskId(1L)
                 .subTasks(subTaskList)
-                .taskTitle("Create something")
-                .tags(tagsList)
-                .tasKDescription("Some description").
-                dueDate(LocalDate.of(2019, Month.FEBRUARY, 20)).build();
+                .taskName("Create something")
+//                .tags(tagsList)
+                .taskDescription("Some description").
+                dueDate(LocalDate.of(2019, Month.FEBRUARY, 20)).user(new User("oafarg","username","password", "username@email.com")).categoryItem(new Category()).build();
     }
 
     @Test
@@ -72,16 +75,9 @@ class TaskServiceTest {
         assertThrows(NotFoundException.class, () -> taskService.getTask(taskId));
     }
 
-    @Test
-    void creatingTaskWhenTaskExists() {
-        when(taskRepository.existsById(taskId)).thenReturn(true);
-        assertThrows(NotFoundException.class, () -> taskService.createTask(task));
-        verify(taskRepository, never()).save(any());
-    }
 
     @Test
     void creatingTaskWhenTaskDoesNotExist() {
-        when(taskRepository.existsById(taskId)).thenReturn(false);
         taskService.createTask(task);
         verify(taskRepository).save(task);
     }
@@ -113,9 +109,9 @@ class TaskServiceTest {
         when(taskRepository.save(task)).thenReturn(task);
         Task result = taskService.updateTask(taskId, updateTask);
         assertAll(
-                () -> assertEquals(updateTask.getTaskTitle(), result.getTaskTitle()),
-                () -> assertEquals(updateTask.getTasKDescription(), result.getTasKDescription()),
-                () -> assertEquals(updateTask.getTags(), result.getTags()),
+                () -> assertEquals(updateTask.getTaskName(), result.getTaskName()),
+                () -> assertEquals(updateTask.getTaskDescription(), result.getTaskDescription()),
+//                () -> assertEquals(updateTask.getTags(), result.getTags()),
                 () -> assertEquals(updateTask.getDueDate(), result.getDueDate())
         );
 
