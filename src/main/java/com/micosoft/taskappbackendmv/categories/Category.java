@@ -1,5 +1,6 @@
 package com.micosoft.taskappbackendmv.categories;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.micosoft.taskappbackendmv.tasks.Task;
 import com.micosoft.taskappbackendmv.users.User;
 import jakarta.persistence.*;
@@ -22,11 +23,10 @@ public class Category {
     private Long categoryId;
     private String categoryName;
     private String categoryColor;
-
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user;
-
+    @JsonIgnore
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private List<Task> tasks = new ArrayList<>();
 

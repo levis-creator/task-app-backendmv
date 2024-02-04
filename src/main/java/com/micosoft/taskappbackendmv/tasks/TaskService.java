@@ -1,9 +1,13 @@
 package com.micosoft.taskappbackendmv.tasks;
 
+import com.micosoft.taskappbackendmv.categories.Category;
+import com.micosoft.taskappbackendmv.categories.CategoryRepository;
 import com.micosoft.taskappbackendmv.errors.NotFoundException;
 import com.micosoft.taskappbackendmv.subtasks.SubTaskRepository;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,7 +18,10 @@ import java.util.Optional;
 public class TaskService {
     @Autowired
     private final TaskRepository taskRepository;
+
     private final SubTaskRepository subTaskRepository;
+    @Autowired
+    private final CategoryRepository categoryRepository;
 
 
     public List<Task> getTasks() {
@@ -30,9 +37,23 @@ public class TaskService {
         }
     }
 
+@Transactional
+    public ResponseEntity<?> createTask(Task task) {
+        Category inputCategory=task.getCategory(); 
+        Optional<Category> categoryDb=categoryRepository.findById(inputCategory.getCategoryId());
+        if(categoryDb.isEmpty()){
+            throw new NotFoundException("Category not found");
+        }else {
+            Category category= categoryDb.get();
+//            setting category start
+            task.setCategory(categoryDb.get());
+//            saving task
+            Task savedTask=taskRepository.save(task);
+//            adding task to category
+            category.getTasks().add(savedTask);
 
-    public Task createTask(Task task) {
-        return taskRepository.save(task);
+            return ResponseEntity.ok(savedTask);
+        }
     }
 
     public String deleteTask(Long id) {

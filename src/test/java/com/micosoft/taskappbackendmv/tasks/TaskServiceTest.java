@@ -44,7 +44,7 @@ class TaskServiceTest {
             .subTasks(null)
             .taskDescription("Some description else")
             .dueDate(LocalDate.of(2019, Month.FEBRUARY, 27))
-            .user(null).categoryItem(null).build();
+            .user(null).category(null).build();
 
     @BeforeEach
     void setUp() {
@@ -53,7 +53,7 @@ class TaskServiceTest {
                 .taskName("Create something")
 //                .tags(tagsList)
                 .taskDescription("Some description").
-                dueDate(LocalDate.of(2019, Month.FEBRUARY, 20)).user(new User("oafarg","username","password", "username@email.com")).categoryItem(new Category()).build();
+                dueDate(LocalDate.of(2019, Month.FEBRUARY, 20)).user(new User("oafarg","username","password", "username@email.com")).category(new Category()).build();
     }
 
     @Test

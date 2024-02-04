@@ -2,6 +2,7 @@ package com.micosoft.taskappbackendmv.tasks;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,11 +18,11 @@ public class TaskController {
         return taskService.getTasks();
     }
     @GetMapping("{id}")
-    public Task gettingTask(@PathVariable("id") Long id){
+     public Task gettingTask(@PathVariable("id") Long id){
         return taskService.getTask(id);
     }
     @PostMapping
-    public Task creatingTask(@RequestBody Task task){
+    public ResponseEntity<?> creatingTask(@RequestBody Task task){
         return taskService.createTask(task);
     }
     @DeleteMapping("{id}")
