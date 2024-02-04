@@ -1,8 +1,12 @@
 package com.micosoft.taskappbackendmv.categories;
 
+import com.micosoft.taskappbackendmv.tasks.Task;
 import com.micosoft.taskappbackendmv.users.User;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -22,5 +26,8 @@ public class Category {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    private List<Task> tasks = new ArrayList<>();
 
 }

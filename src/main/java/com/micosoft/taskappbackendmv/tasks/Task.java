@@ -33,11 +33,6 @@ public class Task {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "category_item")
-    private Category categoryItem;
-
-
 //    @ManyToMany
 //    @JoinTable(name = "task_tags",
 //            joinColumns = @JoinColumn(name = "task_id"),
@@ -47,6 +42,9 @@ public class Task {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "task_id")
     private Collection<SubTask> subTasks = new ArrayList<>();
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn
+    private Category category;
 
     public Task(String taskName, String taskDescription) {
         this.taskName = taskName;
