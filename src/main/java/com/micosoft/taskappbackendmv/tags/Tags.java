@@ -1,12 +1,17 @@
 package com.micosoft.taskappbackendmv.tags;
 
+import com.micosoft.taskappbackendmv.tasks.Task;
 import com.micosoft.taskappbackendmv.users.User;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 @Builder
 @Getter
 @Setter
+@ToString
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,5 +26,9 @@ public class Tags {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @ToString.Exclude
+    @ManyToMany(mappedBy = "tags")
+    private Set<Task> tasks = new LinkedHashSet<>();
 
 }

@@ -3,23 +3,26 @@ package com.micosoft.taskappbackendmv.tasks;
 import com.micosoft.taskappbackendmv.categories.Category;
 import com.micosoft.taskappbackendmv.categories.CategoryRepository;
 import com.micosoft.taskappbackendmv.errors.NotFoundException;
-import com.micosoft.taskappbackendmv.subtasks.SubTaskRepository;
+import com.micosoft.taskappbackendmv.tags.Tags;
+import com.micosoft.taskappbackendmv.tags.TagsRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @AllArgsConstructor
 public class TaskService {
     @Autowired
     private final TaskRepository taskRepository;
-
-    private final SubTaskRepository subTaskRepository;
+    @Autowired
+    private final TagsRepository tagsRepository;
     @Autowired
     private final CategoryRepository categoryRepository;
 
@@ -37,21 +40,22 @@ public class TaskService {
         }
     }
 
-@Transactional
+    @Transactional
     public ResponseEntity<?> createTask(Task task) {
-        Category inputCategory=task.getCategory(); 
-        Optional<Category> categoryDb=categoryRepository.findById(inputCategory.getCategoryId());
-        if(categoryDb.isEmpty()){
+        Category inputCategory = task.getCategory();
+        Optional<Category> categoryDb = categoryRepository.findById(inputCategory.getCategoryId());
+        if (categoryDb.isEmpty()) {
             throw new NotFoundException("Category not found");
-        }else {
-            Category category= categoryDb.get();
-//            setting category start
-            task.setCategory(categoryDb.get());
-//            saving task
-            Task savedTask=taskRepository.save(task);
-//            adding task to category
-            category.getTasks().add(savedTask);
+        } else {
+            Category category = categoryDb.get();
+            task.setCategory(category); // Set the Category directly
 
+            Task savedTask = taskRepository.save(task); // Save the Task
+
+            category.getTasks().add(savedTask); // Add the Task to the Category
+            categoryRepository.save(category); // Save the updated Category
+            savedTask.getTags().addAll(task.getTags());
+            taskRepository.save(savedTask);
             return ResponseEntity.ok(savedTask);
         }
     }

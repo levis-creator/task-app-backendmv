@@ -11,10 +11,13 @@ import lombok.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Builder
 @Getter
 @Setter
+@ToString
 @Entity
 @Table(name = "task")
 @NoArgsConstructor
@@ -32,19 +35,19 @@ public class Task {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-
-//    @ManyToMany
-//    @JoinTable(name = "task_tags",
-//            joinColumns = @JoinColumn(name = "task_id"),
-//            inverseJoinColumns = @JoinColumn(name = "tag_id"))
-//    private Collection<Tags> tags = new ArrayList<>();
-
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "task_id")
+    @ToString.Exclude
+    @OneToMany(cascade = {CascadeType.ALL})
     private Collection<SubTask> subTasks = new ArrayList<>();
     @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn
     private Category category;
+
+    @ToString.Exclude
+    @ManyToMany
+    @JoinTable(name = "task_tags",
+            joinColumns = @JoinColumn(name = "task_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id"))
+    private Set<Tags> tags = new LinkedHashSet<>();
 
     public Task(String taskName, String taskDescription) {
         this.taskName = taskName;
